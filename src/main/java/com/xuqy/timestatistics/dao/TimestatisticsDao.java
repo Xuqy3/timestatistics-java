@@ -1,7 +1,7 @@
-package com.ffcs.timestatistics.dao;
+package com.xuqy.timestatistics.dao;
 
-import com.ffcs.timestatistics.entity.EngineeWorkload;
-import com.ffcs.timestatistics.entity.Timestatistics;
+import com.xuqy.timestatistics.entity.EngineeWorkload;
+import com.xuqy.timestatistics.entity.Timestatistics;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

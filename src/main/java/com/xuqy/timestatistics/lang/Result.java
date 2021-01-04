@@ -1,4 +1,4 @@
-package com.ffcs.timestatistics.lang;
+package com.xuqy.timestatistics.lang;
 
 import lombok.Data;
 

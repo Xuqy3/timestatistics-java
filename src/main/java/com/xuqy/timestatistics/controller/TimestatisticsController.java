@@ -1,16 +1,14 @@
-package com.ffcs.timestatistics.controller;
+package com.xuqy.timestatistics.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ffcs.timestatistics.entity.EngineeWorkload;
-import com.ffcs.timestatistics.entity.Timestatistics;
-import com.ffcs.timestatistics.entity.TotalWorkload;
-import com.ffcs.timestatistics.lang.Result;
-import com.ffcs.timestatistics.service.ITimestatisticsService;
+import com.xuqy.timestatistics.entity.EngineeWorkload;
+import com.xuqy.timestatistics.entity.Timestatistics;
+import com.xuqy.timestatistics.entity.TotalWorkload;
+import com.xuqy.timestatistics.lang.Result;
+import com.xuqy.timestatistics.service.ITimestatisticsService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +16,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * (Timestatistics)表控制层

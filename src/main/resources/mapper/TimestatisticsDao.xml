@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ffcs.timestatistics.dao.TimestatisticsDao">
+<mapper namespace="com.xuqy.timestatistics.dao.TimestatisticsDao">
     <cache type="org.apache.ibatis.cache.impl.PerpetualCache">
         <property name="eviction" value="LRU" />
         <property name="flushInterval" value="600000" />
         <property name="size" value="1024" />
         <property name="readOnly" value="false" />
     </cache>
-    <resultMap type="com.ffcs.timestatistics.entity.Timestatistics" id="TimestatisticsMap">
+    <resultMap type="com.xuqy.timestatistics.entity.Timestatistics" id="TimestatisticsMap">
         <result property="id" column="Id" jdbcType="INTEGER"/>
         <result property="developer" column="Developer" jdbcType="VARCHAR"/>
         <result property="servNo" column="ServNo" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
         <result property="group" column="Group" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap type="com.ffcs.timestatistics.entity.EngineeWorkload" id="EngineeWorkloadMap">
+    <resultMap type="com.xuqy.timestatistics.entity.EngineeWorkload" id="EngineeWorkloadMap">
         <result property="engineePoint" column="EngineePoint" jdbcType="VARCHAR"/>
         <result property="totalWorkload" column="SumWorkload" jdbcType="INTEGER"/>
     </resultMap>

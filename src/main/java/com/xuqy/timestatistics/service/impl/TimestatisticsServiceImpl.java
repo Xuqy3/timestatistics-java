@@ -1,14 +1,12 @@
-package com.ffcs.timestatistics.service.impl;
+package com.xuqy.timestatistics.service.impl;
 
-import com.ffcs.timestatistics.dao.TimestatisticsDao;
-import com.ffcs.timestatistics.entity.EngineeWorkload;
-import com.ffcs.timestatistics.entity.Timestatistics;
-import com.ffcs.timestatistics.service.ITimestatisticsService;
-import com.ffcs.timestatistics.service.ITimestatisticsService;
+import com.xuqy.timestatistics.dao.TimestatisticsDao;
+import com.xuqy.timestatistics.entity.EngineeWorkload;
+import com.xuqy.timestatistics.entity.Timestatistics;
+import com.xuqy.timestatistics.service.ITimestatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

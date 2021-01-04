@@ -1,7 +1,7 @@
-package com.ffcs.timestatistics.service;
+package com.xuqy.timestatistics.service;
 
-import com.ffcs.timestatistics.entity.EngineeWorkload;
-import com.ffcs.timestatistics.entity.Timestatistics;
+import com.xuqy.timestatistics.entity.EngineeWorkload;
+import com.xuqy.timestatistics.entity.Timestatistics;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

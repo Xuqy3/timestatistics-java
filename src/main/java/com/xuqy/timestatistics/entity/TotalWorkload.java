@@ -1,4 +1,4 @@
-package com.ffcs.timestatistics.entity;
+package com.xuqy.timestatistics.entity;
 
 import lombok.Data;
 

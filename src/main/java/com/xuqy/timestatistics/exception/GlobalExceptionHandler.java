@@ -1,7 +1,7 @@
-package com.ffcs.timestatistics.exception;
+package com.xuqy.timestatistics.exception;
 
 
-import com.ffcs.timestatistics.lang.Result;
+import com.xuqy.timestatistics.lang.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
