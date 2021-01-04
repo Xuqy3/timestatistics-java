@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffcs.timestatistics.dao.TimestatisticsDao">
+    <cache type="org.apache.ibatis.cache.impl.PerpetualCache">
+        <property name="eviction" value="LRU" />
+        <property name="flushInterval" value="600000" />
+        <property name="size" value="1024" />
+        <property name="readOnly" value="false" />
+    </cache>
+    <resultMap type="com.ffcs.timestatistics.entity.Timestatistics" id="TimestatisticsMap">
+        <result property="id" column="Id" jdbcType="INTEGER"/>
+        <result property="developer" column="Developer" jdbcType="VARCHAR"/>
+        <result property="servNo" column="ServNo" jdbcType="VARCHAR"/>
+        <result property="engineePoint" column="EngineePoint" jdbcType="VARCHAR"/>
+        <result property="title" column="Title" jdbcType="VARCHAR"/>
+        <result property="status" column="Status" jdbcType="VARCHAR"/>
+        <result property="type" column="Type" jdbcType="VARCHAR"/>
+        <result property="content" column="Content" jdbcType="VARCHAR"/>
+        <result property="beginTime" column="BeginTime" jdbcType="VARCHAR"/>
+        <result property="endTime" column="EndTime" jdbcType="VARCHAR"/>
+        <result property="workLoad" column="WorkLoad" jdbcType="VARCHAR"/>
+        <result property="remarks" column="Remarks" jdbcType="VARCHAR"/>
+        <result property="group" column="Group" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.ffcs.timestatistics.entity.EngineeWorkload" id="EngineeWorkloadMap">
+        <result property="engineePoint" column="EngineePoint" jdbcType="VARCHAR"/>
+        <result property="totalWorkload" column="SumWorkload" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--根据开发者姓名查询工程点以及工作量    -->
+    <select id="queryWorkload" resultMap="EngineeWorkloadMap">
+        SELECT "EngineePoint",SUM("WorkLoad") AS "SumWorkload" FROM "TimeStatistics" WHERE "Developer" = #{developer} GROUP BY "EngineePoint"
+    </select>
+
+    <!--查询所有开发者-->
+    <select id="queryDeveloper" resultType="String">
+        SELECT DISTINCT "Developer" FROM "TimeStatistics"
+    </select>
+
+    <!--查询单个-->
+    <select id="query" resultMap="TimestatisticsMap">
+        SELECT
+            *
+        FROM
+            "TimeStatistics" order by "Id" asc
+    </select>
+
+    <select id="queryByGroup" resultMap="TimestatisticsMap">
+        SELECT
+            *
+        FROM
+            "TimeStatistics"
+        Where "Group" = #{group}
+        order by "Id" asc
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TimestatisticsMap">
+        select
+        *
+        from "TimeStatistics"
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TimestatisticsMap">
+        select
+        *
+        from "TimeStatistics"
+        <where>
+            <if test="id != null">
+                and "Id" = #{id}
+            </if>
+            <if test="developer != null and developer != ''">
+                and "Developer" = #{developer}
+            </if>
+            <if test="servNo != null and servNo != ''">
+                and "ServNo" = #{servNo}
+            </if>
+            <if test="engineePoint != null and engineePoint != ''">
+                and "EngineePoint" = #{engineePoint}
+            </if>
+            <if test="title != null and title != ''">
+                and "Title" = #{title}
+            </if>
+            <if test="status != null and status != ''">
+                and "Status" = #{status}
+            </if>
+            <if test="type != null and type != ''">
+                and "Type" = #{type}
+            </if>
+            <if test="content != null and content != ''">
+                and "Content" = #{content}
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                and "BeginTime" = #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and "EndTime" = #{endTime}
+            </if>
+            <if test="workLoad != null and workLoad != ''">
+                and "WorkLoad" = #{workLoad}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and "Remarks" = #{remarks}
+            </if>
+            <if test="group != null and group != ''">
+                and "Group" = #{group}
+            </if>
+        order by "Id" asc
+        </where>
+    </select>
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="false">
+        insert into "TimeStatistics"("Id","Developer", "ServNo", "EngineePoint", "Title", "Status", "Type", "Content", "BeginTime", "EndTime", "WorkLoad", "Remarks", "Group")
+        values (id.nextval,#{developer}, #{servNo}, #{engineePoint}, #{title}, #{status}, #{type}, #{content}, #{beginTime}, #{endTime}, #{workLoad}, #{remarks}, #{group})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="false">
+        insert into "TimeStatistics"("Id","Developer", "ServNo", "EngineePoint", "Title", "Status", "Type", "Content", "BeginTime",
+        "EndTime", "WorkLoad", "Remarks", "Group")
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (id.nextval,#{entity.developer}, #{entity.servNo}, #{entity.engineePoint}, #{entity.title}, #{entity.status},
+            #{entity.type}, #{entity.content}, #{entity.beginTime}, #{entity.endTime}, #{entity.workLoad},
+            #{entity.remarks}, #{entity.group})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="false">
+        insert into "TimeStatistics"("Id","Developer", "ServNo", "EngineePoint", "Title", "Status", "Type", "Content", "BeginTime",
+        "EndTime", "WorkLoad", "Remarks", "Group")
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (id.nextval,#{entity.developer}, #{entity.servNo}, #{entity.engineePoint}, #{entity.title}, #{entity.status},
+            #{entity.type}, #{entity.content}, #{entity.beginTime}, #{entity.endTime}, #{entity.workLoad},
+            #{entity.remarks}, #{entity.group})
+        </foreach>
+        on duplicate key update
+        "Id" = values(id.nextval) ,"Developer" = values("Developer") , "ServNo" = values("ServNo") , "EngineePoint" = values("EngineePoint") , "Title" =
+        values("Title") , "Status" = values("Status") , "Type" = values("Type") , "Content" = values("Content") , "BeginTime" =
+        values("BeginTime") , "EndTime" = values("EndTime") , "WorkLoad" = values("WorkLoad") , "Remarks" = values("Remarks") , "Group"
+        = values("Group")
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update "TimeStatistics"
+        <set>
+            <if test="developer != null and developer != ''">
+                "Developer" = #{developer},
+            </if>
+            <if test="servNo != null and servNo != ''">
+                "ServNo" = #{servNo},
+            </if>
+            <if test="engineePoint != null and engineePoint != ''">
+                "EngineePoint" = #{engineePoint},
+            </if>
+            <if test="title != null and title != ''">
+                "Title" = #{title},
+            </if>
+            <if test="status != null and status != ''">
+                "Status" = #{status},
+            </if>
+            <if test="type != null and type != ''">
+                "Type" = #{type},
+            </if>
+            <if test="content != null and content != ''">
+                "Content" = #{content},
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                "BeginTime" = #{beginTime},
+            </if>
+            <if test="endTime != null and endTime != ''">
+                "EndTime" = #{endTime},
+            </if>
+            <if test="workLoad != null and workLoad != ''">
+                "WorkLoad" = #{workLoad},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                "Remarks" = #{remarks},
+            </if>
+            <if test="group != null and group != ''">
+                "Group" = #{group},
+            </if>
+        </set>
+        where "Id" = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from "TimeStatistics" where "Id" = #{id}
+    </delete>
+
+</mapper>
